@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AppQuiz</string>
+    <string name="true_text">TRUE</string>
+    <string name="false_text">FALSE</string>
+    <string name="question_day1">Silvio Santos já foi da Globo.</string>
+    <string name="question_day2">Pelé foi ministro do Esporte.</string>
+    <string name="question_day3">Xuxa e Angélica fazem aniversário no mesmo dia.</string>
+    <string name="question_day4">Mr. Catra já teve uma banda de metal.</string>
+    <string name="question_day5">Lázaro Ramos participou de “Cinderela Baiana”</string>
+    <string name="proxima_questao">PRÓXIMA QUESTÃO</string>
+    <string name="resposta_errada">Você errou :(</string>
+    <string name="resposta_certa">Você acertou (:</string>
+    <string name="questao_anterior">questao_anterior</string>
+
+</resources>
