@@ -52,7 +52,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <ImageButton
             android:contentDescription="@string/questao_anterior"
@@ -60,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_previous"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"/>
 
         <ImageButton
@@ -68,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/proxima_questao"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_next"
         />

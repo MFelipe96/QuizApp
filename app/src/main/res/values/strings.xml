@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppQuiz</string>
+    <string name="app_name">Quiz</string>
     <string name="true_text">TRUE</string>
     <string name="false_text">FALSE</string>
     <string name="question_day1">Silvio Santos já foi da Globo.</string>

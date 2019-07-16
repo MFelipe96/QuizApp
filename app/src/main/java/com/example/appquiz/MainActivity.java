@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean respostaEcolhida;
     private int indexBank = 0;
-    private int count = 7;
 
     private Question[] questionBank = new Question[]{
 
@@ -30,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             new Question(R.string.question_day4, true),
             new Question(R.string.question_day5, true),
     };
+
+    private int indexBankPrevious = questionBank.length;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +66,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.next_button:
                 indexBank = (indexBank + 1) % questionBank.length;
                 myQuestion.setText(questionBank[indexBank].getAnswerResId());
-                count++;
                 break;
 
             case R.id.previous_button:
-                //Todo: tratar o caso em que o usuário tenta voltar com indexBank = 0
-                    indexBank = (indexBank + 1) % questionBank.length;
+                if(indexBank > 0) {
+                    indexBank = (indexBank - 1) % questionBank.length;
                     myQuestion.setText(questionBank[indexBank].getAnswerResId());
-                    break;
+                }
+                break;
         }
 
 
