@@ -11,5 +11,7 @@
     <string name="resposta_errada">Você errou :(</string>
     <string name="resposta_certa">Você acertou (:</string>
     <string name="questao_anterior">questao_anterior</string>
+    <string name="counter_question">0 a 100</string>
+    <string name="title">Trivia</string>
 
 </resources>
