@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/roxo_vivo"
+    tools:context=".TelaInicial">
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/ask_my_test"
+        android:layout_marginBottom="30dp"
+        android:text="@string/title"
+        android:textColor="@color/amarelo_claro"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/annie_use_your_telescope" />
+
+    <Button
+        android:id="@+id/button_iniciar_partida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:paddingHorizontal="24dp"
+        android:text="INICIAR PARTIDA"
+        android:background="@drawable/shape"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_editor_absoluteX="161dp" />
+
+    <Button
+        android:id="@+id/button_ultimo_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@drawable/shape"
+        android:text="@string/ultima_pontuacao"
+        app:layout_constraintTop_toBottomOf="@+id/button_iniciar_partida"
+        tools:layout_editor_absoluteX="161dp" />
+
+</LinearLayout>

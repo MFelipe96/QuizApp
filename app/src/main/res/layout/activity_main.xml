@@ -16,7 +16,7 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:layout_above="@+id/ask_my_test"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/title"
         android:textColor="@color/amarelo_claro"
         android:textSize="60sp"
@@ -30,7 +30,7 @@
         android:layout_alignRight="@+id/ask_my_test"
         android:layout_alignParentEnd="false"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-35dp"
+        android:layout_marginTop="-27dp"
         android:layout_marginEnd="17dp"
         android:layout_marginRight="21dp"
         android:text="@string/counter_question"
@@ -47,14 +47,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="6dp"
         android:background="@color/white"
         android:elevation="5dp"
-        android:gravity="center"
         android:padding="8dp"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -67,18 +65,45 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="TextView"
+            android:text=""
             android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/textView_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score"
+            android:layout_marginLeft="2dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/annie_use_your_telescope" />
+
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView_pontos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ask_my_test"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/acertos_e_erros"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/annie_use_your_telescope" />
 
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ask_my_test"
-        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="7dp"
-        android:layout_centerInParent="true"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -86,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:background="@color/amarelo_claro"
+            android:background="@drawable/shape"
             android:contentDescription="@string/questao_anterior"
             android:src="@drawable/ic_previous" />
 
@@ -96,20 +121,19 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/linear"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="40dp"
-            android:background="@color/amarelo_claro"
+            android:layout_marginTop="30dp"
             android:text="@string/true_text"
-            android:textColor="@color/black"
-            />
+            android:background="@drawable/shape"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="40dp"
-            android:background="@color/amarelo_claro"
+            android:layout_marginTop="30dp"
             android:text="@string/false_text"
+            android:background="@drawable/shape"
             android:textColor="@color/black" />
 
         <ImageButton
@@ -117,11 +141,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:background="@color/amarelo_claro"
+            android:background="@drawable/shape"
             android:contentDescription="@string/proxima_questao"
             android:src="@drawable/ic_next"
             android:text="@string/proxima_questao" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/restart_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear"
+        android:layout_centerInParent="true"
+        android:text="@string/reiniciar_partida"
+        android:background="@drawable/shape"
+        android:paddingHorizontal="33dp"/>
 
 </RelativeLayout>
