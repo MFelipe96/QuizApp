@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -19,13 +20,14 @@ import android.widget.Toast;
 import com.example.appquiz.data.AnswerListAsyncResponse;
 import com.example.appquiz.data.QuestionBank;
 import com.example.appquiz.model.Question;
+import com.example.appquiz.util.Prefs;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String MESSAGE_ID = "message_prefes";
     private Button button_false;
     private Button button_true;
     private Button button_restart;
@@ -35,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewCounterQuestion;
     private TextView textViewPontos;
     private TextView textViewScore;
+    private Score score;
+    private Prefs prefs;
     private int currentQuestionIndex = 0;
-    private int countAcertos = 0, countErros = 0, score = countAcertos - countErros;
+    private int countAcertos = 0, countErros = 0;
     private List<Question> questionList;
 
 
@@ -45,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TODO: resolver problema de tentar resgatar variavel nula
+        //prefs.saveScore(score.getScore());
+        //exibirMaiorPontuacao();
         questionList = new QuestionBank().getQuestion(new AnswerListAsyncResponse() {
             @Override
             public void ProcessFinished(ArrayList<Question> questionArrayList) {
@@ -62,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_restart = findViewById(R.id.restart_button);
         textViewPontos = findViewById(R.id.textView_pontos);
         textViewScore = findViewById(R.id.textView_score);
+
+        score = new Score();
+        prefs = new Prefs(this);
 
         button_false.setOnClickListener(this);
         button_true.setOnClickListener(this);
@@ -98,53 +108,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.restart_button:
-                saveScore();
                 reiniciarPartida();
         }
 
     }
 
-    private void saveScore() {
-        int value = score;
-
-        SharedPreferences sharedPreferences = getSharedPreferences(MESSAGE_ID, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("message", value);
-
-        editor.apply();
-    }
-
-    public int GetScore(){
-        SharedPreferences getScore = getPreferences(MODE_PRIVATE);
-        int score = getScore.getInt("message", 0);
-
-        return score;
-
-//        if(score != null)
-//            textView_exibiScore.setText(score);
-//        else
-//            textView_exibiScore.setText("Sem pontuação!!!");
-
+    @Override
+    protected void onPause() {
+        int value = score.getScore();
+        prefs.saveScore(value);
+        super.onPause();
     }
 
     private void reiniciarPartida() {
-        saveScore();
         currentQuestionIndex = 0;
         countErros = 0;
         countAcertos = 0;
         fadeView(Color.WHITE, true);
-        exibirAcertosErros();
+        exibirMaiorPontuacao();
         exibirPontos();
         updateQuestion();
         updateCounterQuestion();
     }
 
-    private void exibirAcertosErros(){
-        textViewPontos.setText("Acertos: " + countAcertos + " / Erros: " + countErros);
+    private void exibirMaiorPontuacao() {
+        textViewPontos.setText(MessageFormat.format("Maior Pontuação: {0}", prefs.getHighScore()));
     }
 
+//    private void exibirAcertosErros(){
+//        textViewPontos.setText("Acertos: " + countAcertos + " / Erros: " + countErros);
+//    }
+
     private void exibirPontos(){
-        textViewScore.setText("Score: " + (countAcertos - countErros));
+        textViewScore.setText("Score: " + score.getScore());
     }
 
     private void updateCounterQuestion() {
@@ -163,14 +159,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(respostaEscolhida == respostaCerta) {
             fadeView(Color.GREEN, false);
-            countAcertos += 1;
-            exibirAcertosErros();
+            exibirMaiorPontuacao();
+            score.addPontos();
             exibirPontos();
             toastMensagemId = R.string.resposta_certa;
+           //todo: fazer as questões passarem após a resposta
+            // currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
+           // updateQuestion();
         }
         else {
-            countErros += 1;
-            exibirAcertosErros();
+            exibirMaiorPontuacao();
+            score.subPontos();
             exibirPontos();
             shakeAnimation(Color.RED);
             toastMensagemId = R.string.resposta_errada;

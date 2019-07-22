@@ -9,9 +9,10 @@
     <string name="counter_question">0 a 100</string>
     <string name="title">Trivia</string>
     <string name="reiniciar_partida">REINICIAR PARTIDA</string>
-    <string name="acertos_e_erros">Acertos: 0 / Erros: 0</string>
+    <string name="amior_pontuacao">Maior Pontuação: 0</string>
     <string name="score">Score: 0</string>
     <string name="ultima_pontuacao">ÚLTIMA PONTUAÇÃO</string>
     <string name="ultima_pontuacao_1">SCORE</string>
+    <string name="yes">OK</string>
 
 </resources>
