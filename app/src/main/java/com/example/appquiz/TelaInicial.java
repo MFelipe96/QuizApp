@@ -68,8 +68,8 @@ public class TelaInicial extends AppCompatActivity implements View.OnClickListen
     public void simpleAlert() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Última Pontuação");
-        builder.setMessage(score + " pontos");
+        builder.setTitle(R.string.ult_pontuacao_dialogo);
+        builder.setMessage(score + getString(R.string.pontos));
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i) {}
         });

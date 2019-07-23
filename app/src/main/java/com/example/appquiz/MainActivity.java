@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Score score;
     private Prefs prefs;
     private int currentQuestionIndex = 0;
-    private int countAcertos = 0, countErros = 0;
     private List<Question> questionList;
 
 
@@ -48,17 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TODO: resolver problema de tentar resgatar variavel nula
-        //prefs.saveScore(score.getScore());
-        //exibirMaiorPontuacao();
-        questionList = new QuestionBank().getQuestion(new AnswerListAsyncResponse() {
-            @Override
-            public void ProcessFinished(ArrayList<Question> questionArrayList) {
-                textViewQuestion.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
-                textViewCounterQuestion.setText(currentQuestionIndex + " / " + questionList.size());
-            }
-        });
 
         button_false = findViewById(R.id.false_button);
         button_true = findViewById(R.id.true_button);
@@ -79,6 +68,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         previousAsk.setOnClickListener(this);
         button_restart.setOnClickListener(this);
 
+        //retomando o jogo de onde parou
+        currentQuestionIndex = prefs.getStates();
+
+        exibirMaiorPontuacao();
+        questionList = new QuestionBank().getQuestion(new AnswerListAsyncResponse() {
+            @Override
+            public void ProcessFinished(ArrayList<Question> questionArrayList) {
+                textViewQuestion.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
+                textViewCounterQuestion.setText(currentQuestionIndex + " / " + questionList.size());
+            }
+        });
+
     }
 
     @Override
@@ -95,16 +96,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.next_button:
-                currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
-                updateQuestion();
-                updateCounterQuestion();
+                goNext(1);
                 break;
 
             case R.id.previous_button:
                 if(currentQuestionIndex > 0) {
-                    currentQuestionIndex = (currentQuestionIndex - 1) % questionList.size();
-                    updateQuestion();
-                    updateCounterQuestion();
+                    goNext(-1);
                 }
                 break;
             case R.id.restart_button:
@@ -113,17 +110,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void goNext(int value) {
+        currentQuestionIndex = (currentQuestionIndex + value) % questionList.size();
+        updateQuestion();
+        updateCounterQuestion();
+    }
+
     @Override
     protected void onPause() {
         int value = score.getScore();
         prefs.saveScore(value);
+        prefs.setStates(currentQuestionIndex);
+        Log.d("OnPause", "onPause: " + currentQuestionIndex);
         super.onPause();
     }
 
     private void reiniciarPartida() {
+        score.setScore(0);
         currentQuestionIndex = 0;
-        countErros = 0;
-        countAcertos = 0;
         fadeView(Color.WHITE, true);
         exibirMaiorPontuacao();
         exibirPontos();
@@ -134,10 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void exibirMaiorPontuacao() {
         textViewPontos.setText(MessageFormat.format("Maior Pontuação: {0}", prefs.getHighScore()));
     }
-
-//    private void exibirAcertosErros(){
-//        textViewPontos.setText("Acertos: " + countAcertos + " / Erros: " + countErros);
-//    }
 
     private void exibirPontos(){
         textViewScore.setText("Score: " + score.getScore());
@@ -163,9 +163,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             score.addPontos();
             exibirPontos();
             toastMensagemId = R.string.resposta_certa;
-           //todo: fazer as questões passarem após a resposta
-            // currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
-           // updateQuestion();
         }
         else {
             exibirMaiorPontuacao();
@@ -174,8 +171,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             shakeAnimation(Color.RED);
             toastMensagemId = R.string.resposta_errada;
         }
-
+        nextQuestionAuto();
         Toast.makeText(getApplicationContext(),toastMensagemId, Toast.LENGTH_SHORT).show();
+    }
+
+    public void nextQuestionAuto(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                goNext(1);
+            }
+        }, 1250);
     }
 
     private void fadeView(final int cor, boolean flag){

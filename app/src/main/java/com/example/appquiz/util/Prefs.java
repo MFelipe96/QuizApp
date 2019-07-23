@@ -31,6 +31,14 @@ public class Prefs {
             return value;
     }
 
+    public void setStates(int index){
+        preferences.edit().putInt("index_state", index).apply();
+    }
+
+    public int getStates(){
+        return preferences.getInt("index_state", 0);
+    }
+
 }
 
 

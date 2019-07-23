@@ -68,18 +68,20 @@
             android:text=""
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textView_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/score"
-            android:layout_marginLeft="2dp"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:fontFamily="@font/annie_use_your_telescope" />
-
     </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/textView_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9dp"
+        android:layout_above="@+id/textView_pontos"
+        android:text="@string/score"
+        android:textColor="@color/amarelo_claro"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/annie_use_your_telescope" />
 
     <TextView
         android:id="@+id/textView_pontos"
