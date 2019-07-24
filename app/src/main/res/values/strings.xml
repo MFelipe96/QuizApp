@@ -16,5 +16,6 @@
     <string name="yes">OK</string>
     <string name="ult_pontuacao_dialogo">Última Pontuação</string>
     <string name="pontos">pontos</string>
+    <string name="drop_table">DROP TABLE IF EXISTS</string>
 
 </resources>
